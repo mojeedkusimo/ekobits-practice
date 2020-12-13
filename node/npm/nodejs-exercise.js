@@ -22,12 +22,13 @@ let findJoke = (searchTerm) => {
             console.log("I am sorry no joke was found for the word you entered, please try another word.");
         } else{
     
-            let randomNum = Math.floor(Math.random()*jokesArray.length);
+            let randomNum = Math.trunc(Math.random()*jokesArray.length);
             let randomJoke = jokesArray[randomNum].joke;
             
             fs.appendFile("jokes.txt", `\n${randomJoke}`, (error) => {
                 if (error) throw error;
                 console.log("joke.txt has been updated!");
+                // console.log(jokesArray);
             });
         }
     })

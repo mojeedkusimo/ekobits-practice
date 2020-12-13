@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "curl-request": "^1.1.1",
     "curlrequest": "^1.0.1",
+    "express": "^4.17.1",
+    "locus": "^2.0.4",
+    "morgan": "^1.10.0",
     "prompt": "^1.0.0",
     "request": "^2.88.2"
   }
