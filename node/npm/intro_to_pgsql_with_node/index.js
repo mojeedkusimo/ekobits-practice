@@ -20,19 +20,19 @@ async function getStudents() {
 
 
 async function addStudent() {
-    const add = await client.query("INSERT INTO students VALUES (7, 'Mojeed') RETURNING *");
+    const add = await client.query("INSERT INTO students (name) VALUES ('Ajala') RETURNING *");
     console.log(add.rows);
 }
 
 async function updateStudent() {
-    const update = await client.query("UPDATE students SET name = 'Tunde' WHERE id = 9 RETURNING *");
-    console.log(update.rows);
+    const update = await client.query("UPDATE students SET name = 'Tunde' WHERE id = 9");
+    console.log(update);
 }
 
 async function deleteStudent() {
-    const remove = await client.query("DELETE FROM students WHERE id = 7 RETURNING *");
-    console.log(remove);
+    const remove = await client.query("DELETE FROM students WHERE id = 6 RETURNING *");
+    console.log(remove.rows);
 }
 // let's get our students and then stop the node process RETURNING *
 // when we start using express, process.exit will be a response from the server instead
-getStudents().then(() => process.exit(0));
+updateStudent().then(() => process.exit(0));
