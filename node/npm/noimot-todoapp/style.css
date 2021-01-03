@@ -1,0 +1,37 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+  }
+  
+  body {
+    background: #d580ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .container, h1 {
+    margin-top: 20px;
+  }
+  
+  .enterTodo {
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    outline: 0;
+    border: none; 
+  }
+  
+  .addTodoBtn {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .todoList {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
