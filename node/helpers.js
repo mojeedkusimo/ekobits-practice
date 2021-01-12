@@ -4,3 +4,5 @@ module.exports = {
         console.log(`Hi ${this.name}`);
     }
 }
+
+console.log(process.env.NODE_ENV);
