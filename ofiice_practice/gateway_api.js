@@ -7,7 +7,7 @@ request.post({
   },
   json: true,
   body: {
-    sender: 'iSTEMLabs',
+    sender: 'iSTEMLabsAfrica',
     message: 'Hello! Just 3 days left to our next Virtual Open Day. We look forward to seeing you there.....from GatewayApi.',
     recipients: [
         {msisdn: 2348056732063},
