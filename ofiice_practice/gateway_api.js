@@ -2,8 +2,8 @@ var request = require('request');
 request.post({
   url: 'https://gatewayapi.com/rest/mtsms',
   oauth: {
-    consumer_key: 'OCAI1koN5KdKlLP4PBZulMuP',
-    consumer_secret: 'K5rMzXdk(^tAHXOBF.0@hML@HPuSkaDu&nOtXxqk',
+    consumer_key: 'PUBLIC_KEY',
+    consumer_secret: 'SECRET_KEY',
   },
   json: true,
   body: {
