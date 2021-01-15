@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 
 app.get('/api', (req, res, next) => {
     try {
-        res.send('Welcome to Api exercise');
+        res.send('Welcome to Api exercise at Home');
     }
     catch (e) {
         return next(e);
@@ -16,19 +16,19 @@ app.get('/api', (req, res, next) => {
 
 app.use((req, res, next) => {
     let err = new Error("Page not found!");
-    res.stautus = 500 || err.stautus;
+    res.status = 500 || err.status;
 
     return next(err);
 })
 
 app.use((err, req, res, next) => {
-    res.stautus = 500 || err.stautus;
+    res.status = 500 || err.status;
     res.json({
         message: err.message,
-        erroe: err
+        error: err
     })
 })
 
-app.listen(5000, () => {
+app.listen(5001, () => {
     console.log('Server is running....')
 })
