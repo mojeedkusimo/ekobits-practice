@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 
-app.use('/api', routes);
+app.use('/api/users', routes);
 
 app.get('/api', (req, res, next) => {
     try {

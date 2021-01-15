@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
+let secretKey = 'secret';
 let id = 2;
 let users = [
     {
@@ -20,9 +21,24 @@ let users = [
     }
 ];
 
-router
-    .route("/users")
-    .get((req, res, next) => {
+let adminRouteOnly = (req, res, next) => {
+    try {
+        let authKey = req.headers.authorization.split(" ")[1];
+
+        const token = jwt.verify(authKey, secretKey);
+
+        if(token.user.isAdmin) {
+            return next();
+        } else {
+            return res.send("Access denied!")
+        }
+    }
+    catch (e) {
+        return next(e);
+    }
+}
+
+    router.get("/", adminRouteOnly, (req, res, next) => {
         try {
             res.json(users);
         }
@@ -30,7 +46,8 @@ router
             return next(e);
         }
     })
-    .post(async (req, res, next) => {
+
+    router.post('/', async (req, res, next) => {
         try {
             let { username, password, isAdmin } = req.body;
 
@@ -46,7 +63,11 @@ router
 
             user.isAdmin = isAdmin;
 
-            res.json(user);
+            const token = jwt.sign({user}, secretKey, {
+                expiresIn: 10 * 60
+            })
+            console.log(token);
+            res.status(201).json(user);
 
         }
         catch (e) {
@@ -54,29 +75,32 @@ router
         }
     })
 
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
     try {
         let { username, password } = req.body;
 
-        let findUsername = users.find((val) => val.username === username);
-        let findUserIndex = users.findIndex(val => val.username === findUsername);
-        
-        if (findUsername !== undefined) {
-            const isMatch = bcrypt.compare(password, users[findUserIndex].password)
+        let user = users.find(val => val.username === username);
+
+        if (user !== undefined) {
+            const isMatch = await bcrypt.compare(password, user.password)
 
             if (isMatch) {
+                const token = jwt.sign({user}, secretKey, {
+                    expiresIn: 10 * 60
+                })
+                console.log(token);
                 return res.json({
                     status: 200,
-                    message: users[findUserIndex]
+                    message: `${user.username} logged in successfully`
                 });    
             }
             return res.json({
-                status: 200,
+                status: 400,
                 message: "Invalid password"
             });
         }
         return res.json({
-            status: 303,
+            status: 400,
             message: "Invalid username"
         });
     }
@@ -84,6 +108,5 @@ router.post('/login', (req, res, next) => {
         return next(e);
     }
 });
-
 
 module.exports = router;
