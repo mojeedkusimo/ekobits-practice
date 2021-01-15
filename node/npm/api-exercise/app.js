@@ -16,7 +16,7 @@ app.get('/api', (req, res, next) => {
 
 app.use((req, res, next) => {
     let err = new Error("Page not found!");
-    res.stautus = 500 || err.stautus;
+    res.stautus = 404;
 
     return next(err);
 })
