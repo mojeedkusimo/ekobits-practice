@@ -38,9 +38,40 @@ let adminRouteOnly = (req, res, next) => {
     }
 }
 
+let adminAndUserRouteOnly = (req, res, next) => {
+    try {
+
+        let authKey = req.headers.authorization.split(" ")[1];
+
+        const token = jwt.verify(authKey, secretKey);
+
+        if(token.user.isAdmin || token.user.id === req.params.id) {
+            return next();
+        } else {
+            return res.send("Access denied!!!")
+        }
+    }
+    catch (e) {
+        return next(e);
+    }
+}
+
     router.get("/", adminRouteOnly, (req, res, next) => {
         try {
-            res.json(users);
+            let user = users.find(val => val.id === 3);
+            res.json(user);
+        }
+        catch (e) {
+            return next(e);
+        }
+    })
+
+    router.get('/:id', adminAndUserRouteOnly, (req, res, next) => {
+        try {
+            let user = users.find(val => val.id === 3);
+            
+            console.log(user)
+            return res.json(user);
         }
         catch (e) {
             return next(e);
@@ -67,7 +98,7 @@ let adminRouteOnly = (req, res, next) => {
                 expiresIn: 10 * 60
             })
             console.log(token);
-            res.status(201).json(user);
+            return res.status(201).json(user);
 
         }
         catch (e) {
@@ -108,5 +139,6 @@ router.post('/login', async (req, res, next) => {
         return next(e);
     }
 });
+
 
 module.exports = router;
