@@ -5,32 +5,24 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 let secretKey = 'secret';
-let id = 2;
-let users = [
-    {
-        id: 1,
-        username: 'user1',
-        password: 'pass1',
-        isAdmin: true
-    },
-    {
-        id: 2,
-        username: 'user2',
-        password: 'pass2',
-        isAdmin: false
-    }
-];
+let id = 0;
+let users = [];
 
 let adminRouteOnly = (req, res, next) => {
     try {
-        let authKey = req.headers.authorization.split(" ")[1];
-
-        const token = jwt.verify(authKey, secretKey);
-
-        if(token.user.isAdmin) {
-            return next();
-        } else {
-            return res.send("Access denied!")
+        if (req.headers.authorization) {
+            let authKey = req.headers.authorization.split(" ")[1];
+        
+            const token = jwt.verify(authKey, secretKey);
+    
+            if(token.user.isAdmin) {
+                return next();
+            } else {
+                return res.send(token.user.username + " User has no access...")
+            }
+        }
+         else {
+            return res.send("Kindly log in...")
         }
     }
     catch (e) {
@@ -40,15 +32,20 @@ let adminRouteOnly = (req, res, next) => {
 
 let adminAndUserRouteOnly = (req, res, next) => {
     try {
+        if (req.headers.authorization) {
+            let authKey = req.headers.authorization.split(" ")[1];
 
-        let authKey = req.headers.authorization.split(" ")[1];
-
-        const token = jwt.verify(authKey, secretKey);
-
-        if(token.user.isAdmin || token.user.id === req.params.id) {
-            return next();
-        } else {
-            return res.send("Access denied!!!")
+            const token = jwt.verify(authKey, secretKey);
+    
+            if(token.user.isAdmin || token.user.id === Number(req.params.id)) {
+                return next();
+            } else {
+                return res.send(token.user.username + " Unauthorized User!!!");
+                
+            }
+        }
+        else {
+            return res.send("You are not logged in");
         }
     }
     catch (e) {
@@ -56,50 +53,38 @@ let adminAndUserRouteOnly = (req, res, next) => {
     }
 }
 
-    router.get("/", adminRouteOnly, (req, res, next) => {
+router
+    .route("/")
+    .get(adminRouteOnly, (req, res, next) => {
         try {
-            let user = users.find(val => val.id === 3);
-            res.json(user);
+            res.json(users);
         }
         catch (e) {
             return next(e);
         }
     })
-
-    router.get('/:id', adminAndUserRouteOnly, (req, res, next) => {
-        try {
-            let user = users.find(val => val.id === 3);
-            
-            console.log(user)
-            return res.json(user);
-        }
-        catch (e) {
-            return next(e);
-        }
-    })
-
-    router.post('/', async (req, res, next) => {
+    .post(async (req, res, next) => {
         try {
             let { username, password, isAdmin } = req.body;
-
+    
             let user = {};
             user.id = ++id;
             user.username = username;
-
+    
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
-
+    
             user.password = hashedPassword;
             users.push(user);
-
+    
             user.isAdmin = isAdmin;
-
+    
             const token = jwt.sign({user}, secretKey, {
-                expiresIn: 10 * 60
+                expiresIn: 60 * 60
             })
             console.log(token);
             return res.status(201).json(user);
-
+    
         }
         catch (e) {
             return next(e);
@@ -140,5 +125,42 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
+router
+    .route('/:id')
+    .get(adminAndUserRouteOnly, (req, res, next) => {
+        try {
+            let user = users.find(val => val.id === Number(req.params.id));
+            
+            console.log(user)
+            return res.json(user);
+        }
+        catch (e) {
+            return next(e);
+        }
+    })
+    .patch(adminAndUserRouteOnly, (req, res, next) => {
+        try {
+            let user = users.find(val => val.id === Number(req.params.id));
+
+            user.interest = req.body.interest;
+            
+            return res.json(user);
+        }
+        catch (e) {
+            return next(e);
+        }
+    })
+    .delete(adminAndUserRouteOnly, (req, res, next) => {
+        try {
+            let userIndex = users.findIndex((val => val.id === Number(req.params.id)));
+
+            let deletedUser = users.splice(userIndex, 1);
+            
+            return res.json(deletedUser);
+        }
+        catch (e) {
+            return next(e);
+        }
+    })
 
 module.exports = router;
