@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const routes = require("./routes");
+require("dotenv").config({path: '../../.env'});
 
 const app = express();
 
@@ -28,13 +29,13 @@ app.use((req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-    res.stautus = 500 || err.status;
+    res.status = 500 || err.status;
     res.json({
         message: err.message,
         error: err
     })
 })
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server is running....')
 })
