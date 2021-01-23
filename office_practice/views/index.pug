@@ -1,0 +1,13 @@
+//- h1 Hi #{name}, welcome to the pug page!
+
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    title Pug Page
+    style
+        include ../public/style.css
+body
+    h1 "Hello World!"
+    p Outer Paragraph
+        .foo A div with a class of foo
+    h2 Let's do some math! #{5+5}
