@@ -9,3 +9,6 @@ class App extends React.Component {
   }
   
   ReactDOM.render(<App />, document.getElementById("app"));
+
+
+// This is not going to work because the browser does not understand JSX, thus, Babel is needed to transpile it to JS
