@@ -14,9 +14,14 @@ class MyComponent extends React.Component {
         <div>
         <p>Paragraph 1 - {this.props.name}</p>
         <p>{name}</p>
-        {name === "student" ? (<p>Welcome student</p>) : (
+        {name === "student" ? (<p>Welcome student</p>) : this.props.name === "Matt" ? (
           <div>
-            <h1 style={style}>This is a mini Component</h1>
+            <h1 style={style}>This is a mini Component for Matt</h1>
+            <h3>Hello, {name}</h3>
+          </div>
+        ): (
+          <div>
+            <h1 style={style}>This is a mini Component for Elie</h1>
             <h3>Hello, {name}</h3>
           </div>
         )}
@@ -30,7 +35,7 @@ class App extends React.Component {
     return (
       <div>
         <h1 className="primary-text">I am the main Man!!!</h1>
-        <MyComponent name="Matt"/>
+        <MyComponent name="Elie"/>
       </div>
     )
   }
