@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Child from './App';
+import InstructorApp from './instructor';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <InstructorApp/>
   </React.StrictMode>,
   document.getElementById('root')
 );
