@@ -1,0 +1,10 @@
+.poke-card {
+    background: #D3D3D3;
+    border-radius: 50%;
+}
+
+#pokedex-header {
+    text-align: center;
+    /* color: #D3D3D3; */
+    font-weight: 700;
+}

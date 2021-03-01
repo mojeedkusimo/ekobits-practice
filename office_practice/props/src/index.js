@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Child from './App';
-import InstructorApp from './instructor';
+import Pokedex from './Props_exercise';
 
 ReactDOM.render(
   <React.StrictMode>
-    <InstructorApp/>
+    <Pokedex/>
   </React.StrictMode>,
   document.getElementById('root')
 );
