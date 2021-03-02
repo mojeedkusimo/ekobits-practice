@@ -1,16 +1,24 @@
 import "./style.css"
 
 let Pokedex = (props) => {
+
+    let pokeList = props.pokemon.map(poke => {
+        return (
+            <Pokecard
+            key={poke.id}
+            name={poke.name}
+            type={poke.type}
+            image={poke.image}
+        />
+        );
+    });
+
     return (
         <div>
             <h1 id='pokedex-header'>Pokedex</h1>
-            <Pokecard
-                key={props.Pokecard.id}
-                name={props.Pokecard.name}
-                type={props.Pokedex.type}
-                image={props.Pokedex.image}
-            />
-
+            <div className='flex-container'>
+                {pokeList}
+            </div>
         </div>
     );
 }
@@ -18,7 +26,9 @@ let Pokedex = (props) => {
 let Pokecard = (props) => {
     return (
         <div className='poke-card'>
-            Test
+            <h3>{props.name}</h3>
+            <img src={props.image} alt={props.name}/>
+            <p>Type: {props.type}</p>
         </div>
     );
 }

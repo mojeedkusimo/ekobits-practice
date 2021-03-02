@@ -1,10 +1,31 @@
-.poke-card {
-    background: #D3D3D3;
-    border-radius: 50%;
-}
 
 #pokedex-header {
     text-align: center;
-    /* color: #D3D3D3; */
     font-weight: 700;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center
+}
+
+.poke-card {
+    text-align: center;
+    background: #D3D3D3;
+    border-radius: 10px;
+    padding: 40px 50px;
+    margin: 20px
+}
+
+.poke-card h3 {
+    color: blue;
+    font-weight: 700;
+}
+
+.poke-card img {
+    padding: 5px 0px;
+}
+
+.poke-card p {
+    font-weight: 600;
 }
