@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Pokedex from './Props_exercise';
+import AppState from './state';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Pokedex/>
+    <AppState/>
   </React.StrictMode>,
   document.getElementById('root')
 );
