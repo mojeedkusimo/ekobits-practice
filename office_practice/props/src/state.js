@@ -38,4 +38,30 @@ let AppStateHooks = (props) => {
     );
 }
 
-export default AppStateHooks;
+let PureFunction = ( props ) => {
+    const people = [
+        { name: "Michael" },
+        { name: "Elie" },
+        { name: "Angelina" }
+    ];
+    let [ group, setGoup ] = useState(people);
+    let newGroup = group.slice();
+    newGroup.push({ name: "Mojeed" });
+    useEffect(() => {
+        setTimeout(() => {
+
+            setGoup(newGroup);
+        }, 5000);
+    });
+    let persons = group.map((person) => {
+        return <li key={person.name}>{person.name}</li>
+    });
+
+    return (
+        <div>
+            {persons}
+        </div>
+    );
+}
+
+export default PureFunction;
