@@ -39,3 +39,15 @@
 .test {
     background-color:black;
 }
+
+.todo {
+    margin: 0 10px;
+}
+
+.todo-done {
+    background-color: green;
+}
+
+.todo-pending {
+    background-color: red;
+}
