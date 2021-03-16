@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppState from './TodoApp';
+import AppState from './events';
 
 ReactDOM.render(
   <React.StrictMode>
