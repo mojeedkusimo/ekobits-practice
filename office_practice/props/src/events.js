@@ -31,4 +31,39 @@ let EventBinding = () => {
     )
 }
 
-export default EventBinding;
+let Instructors = (props) => {
+    return (
+        <div>
+            <h3>{props.name}</h3>
+            <button onClick={props.remove}>delete</button>
+        </div>
+    );
+}
+
+let InstructoList = () => {
+    let instructors = ["Elie", "Michael", "Matt"];
+
+    let [state, setState] = useState(instructors);
+
+    let handleRemove = (selectedIndex) => {
+        let newList = state.filter((name, index) => index !== selectedIndex);
+
+        setState(newList);
+        // alert(newList)
+    }
+
+    let list = state.map((name, index)=> {
+        return(<Instructors
+            name={name}
+            remove={() => handleRemove(index)}
+        />)
+    });
+
+    return (
+        <div>
+            {list}
+        </div>
+    );
+}
+
+export default InstructoList;

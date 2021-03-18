@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppState from './events';
+import AppState from './Events_exercise';
 
 ReactDOM.render(
   <React.StrictMode>
